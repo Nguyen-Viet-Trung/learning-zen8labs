@@ -69,14 +69,14 @@ public class Crawler {
             String title = productElement.select("h3 a").attr("title");
             String price = productElement.select(".price_color").text();
             String imageUrl = productElement.select("img").attr("src");
-
+            String status = productElement.select(".instock availability").text();
             // Resolve relative image URLs
             if (!imageUrl.startsWith("http")) {
                 imageUrl = doc.baseUri() + imageUrl;
             }
 
             // Add product to the list
-            products.add(new Product(title, price, imageUrl));
+            products.add(new Product(title, price, imageUrl, status));
         }
     }
 }
@@ -86,20 +86,24 @@ class Product {
     private String title;
     private String price;
     private String imageUrl;
+    private String status;
 
-    public Product(String title, String price, String imageUrl) {
+    public Product(String title, String price, String imageUrl, String status) {
         this.title = title;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "title='" + title + '\'' +
-                ", price='" + price + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
+        "title='" + title + '\'' +
+        ", price='" + price + '\'' +
+        ", imageUrl='" + imageUrl + '\'' +
+        ", status='" + status + '\'' +
+        '}';
+
     }
 }
 
